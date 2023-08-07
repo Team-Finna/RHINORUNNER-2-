@@ -4,16 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "TileBase.h"
 #include "MovingTileBase.generated.h"
 
-UENUM()
-enum class TileType
-{
-	NONE,
-	Building,
-	Road,
 
-};
 
 USTRUCT()
 struct FTiles
@@ -24,7 +18,7 @@ struct FTiles
 	int32 Column;
 	float size;
 	FVector Location;
-	UStaticMeshComponent* Mesh;
+	ATileBase* Tile;
 };
 
 UCLASS()
@@ -43,10 +37,11 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* TileMesh;
-	TArray<UStaticMeshComponent*> TileMeshes;
+	TArray<TSubclassOf<ATileBase>> Tiles;
 
-	TArray<FTiles> Tiles; 
+
+	
+	TArray<FTiles> TileComponents;
 
 	UPROPERTY(EditAnywhere)
 		int32 GridSizeX = 5;
@@ -60,6 +55,10 @@ public:
 	
 
 	UFUNCTION()
-	void DrawTile(float xSize, float ySize, FTiles& t);
+	void DrawTile(FTiles t);
+
+	
+
+
 
 };

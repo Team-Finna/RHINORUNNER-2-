@@ -9,7 +9,6 @@ AMovingTileBase::AMovingTileBase()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	TileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	
 }
 
@@ -18,31 +17,36 @@ void AMovingTileBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TileMeshes.SetNum(GridSizeX * GridSizeY);
+	
+	TileComponents.SetNum(GridSizeX * GridSizeY);
+	Tiles.SetNum(TileComponents.Num());
+	
+	if (!Tiles.IsEmpty())
+	{
+		for (int i = 0; i < TileComponents.Num(); i++)
+		{
+			TileComponents[i].Tile = Cast<ATileBase>(Tiles[i]);
+			
+		}
+	}
 	
 
-	Tiles.SetNum(GridSizeX * GridSizeY);
-
-	for (int j = 0; j < Tiles.Num(); j++)
-	{
+	
 		
 		for (int i = 0; i < GridSizeX; i++)
 		{
 			for (int ii = 0; ii < GridSizeY; ii++)
 			{
+				TileComponents[i].Row = i; 
+				TileComponents[ii].Column = ii; 
+				
+		
 			
-				Tiles[j].Column = ii; 
-				Tiles[j].Row = i;
-				Tiles[j].Mesh = TileMeshes[j];
 			}
 		}
-	}
 
-	for (int i = 0; i < Tiles.Num(); i++)
-	{
-		DrawTile(12, 12, Tiles[1]);
-		UE_LOG(LogTemp, Warning, TEXT("Grid x : % i, and Grid y : % i"), Tiles[i].Row, Tiles[i].Column);
-	}
+	
+		DrawTile(TileComponents[3]);
 	
 	
 	
@@ -55,15 +59,17 @@ void AMovingTileBase::Tick(float DeltaTime)
 
 }
 
-void AMovingTileBase::DrawTile(float xSize, float ySize, FTiles& t)
+void AMovingTileBase::DrawTile(FTiles t)
 {
 	//draw tile to the screen; 
 	float TileRow = t.Row;
 	float TileColumn = t.Column;
 	
-	FVector location = FVector(xSize * TileRow, ySize * TileColumn, t.Mesh->GetRelativeLocation().Z * 0.5f);
+	FVector location = FVector(t.size * TileRow, t.size * TileColumn, t.Tile->GetActorLocation().Z * 0.5f);
 	
-	t.Mesh->SetWorldLocation(location);
+	t.Tile->SetActorLocation(location);
+	t.Tile->SetActorHiddenInGame(false);
+	
 	
 
 }
