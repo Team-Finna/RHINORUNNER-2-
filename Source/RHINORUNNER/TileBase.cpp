@@ -17,7 +17,7 @@ ATileBase::ATileBase()
 void ATileBase::BeginPlay()
 {
 	Super::BeginPlay();
-	StartLocation = GetActorLocation(); 
+	
 }
 
 // Called every frame
@@ -25,47 +25,20 @@ void ATileBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	IsTileOutOfVisualizedArea();
-	MoveToStartLocation();
-
-
+	
+	//MoveToStartLocation();
 }
 
-bool ATileBase::IsTileOutOfVisualizedArea()
+bool ATileBase::IsTileOutOfVisualizedArea(bool notVisualized)
 {
-	if (NearBounds && FarBounds)
+	
+	if (notVisualized)
 	{
-		
-		
-		if (GetActorLocation().X < NearBounds->GetActorLocation().X)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Out of bounds near"));
-			return true;
-		}
-
-		else if (GetActorLocation().X > FarBounds->GetActorLocation().X)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Out of bounds far") );
-			return true;
-		}
-		else return false;
-
-		
-	}
-	else return false;
-
-
-}
-
-FVector ATileBase::MoveToStartLocation()
-{
-	FVector Start = StartLocation; 
-
-	if ( NearBounds && GetActorLocation().X < NearBounds->GetActorLocation().X)
-	{
-		SetActorLocation(StartLocation);
+		SetActorHiddenInGame(true);
 	}
 
-	return Start;
+	return notVisualized;
+	
 }
+
 

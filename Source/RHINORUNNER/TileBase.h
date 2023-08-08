@@ -37,19 +37,14 @@ public:
 	UStaticMeshComponent* Mesh; 
 
 	UFUNCTION()
-	bool IsTileOutOfVisualizedArea();
+	bool IsTileOutOfVisualizedArea(bool notVisualized);
+
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		AActor* FarBounds;
+		FVector NearBounds = FVector::ZeroVector;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		AActor* NearBounds;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector StartLocation;
-
-	UFUNCTION()
-		FVector MoveToStartLocation(); 
+	 
 
 
 };
