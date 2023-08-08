@@ -33,7 +33,23 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	UStaticMeshComponent* Mesh; 
+
+	UFUNCTION()
+	bool IsTileOutOfVisualizedArea();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		AActor* FarBounds;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		AActor* NearBounds;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector StartLocation;
+
+	UFUNCTION()
+		FVector MoveToStartLocation(); 
+
 
 };

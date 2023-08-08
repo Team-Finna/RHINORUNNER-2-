@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Components/StaticMeshComponent.h"
 #include "MovingTileBase.h"
 
 // Sets default values
@@ -21,15 +21,12 @@ void AMovingTileBase::BeginPlay()
 	TileComponents.SetNum(GridSizeX * GridSizeY);
 	Tiles.SetNum(TileComponents.Num());
 	
-	if (!Tiles.IsEmpty())
-	{
-		for (int i = 0; i < TileComponents.Num(); i++)
-		{
-			TileComponents[i].Tile = Cast<ATileBase>(Tiles[i]);
-			
-		}
-	}
 	
+	for (int i = 0; i < TileComponents.Num(); i++)
+	{
+		TileComponents[i].Tile = Tiles[i].GetDefaultObject();
+		
+	}
 
 	
 		
@@ -52,6 +49,8 @@ void AMovingTileBase::BeginPlay()
 	
 }
 
+
+
 // Called every frame
 void AMovingTileBase::Tick(float DeltaTime)
 {
@@ -59,13 +58,13 @@ void AMovingTileBase::Tick(float DeltaTime)
 
 }
 
-void AMovingTileBase::DrawTile(FTiles t)
+void AMovingTileBase::DrawTile(FTiles& t)
 {
 	//draw tile to the screen; 
 	float TileRow = t.Row;
 	float TileColumn = t.Column;
 	
-	FVector location = FVector(t.size * TileRow, t.size * TileColumn, t.Tile->GetActorLocation().Z * 0.5f);
+	FVector location = FVector(t.size * TileRow, t.size * TileColumn, 0);
 	
 	t.Tile->SetActorLocation(location);
 	t.Tile->SetActorHiddenInGame(false);

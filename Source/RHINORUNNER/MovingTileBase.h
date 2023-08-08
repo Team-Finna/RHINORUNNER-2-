@@ -55,7 +55,7 @@ public:
 	
 
 	UFUNCTION()
-	void DrawTile(FTiles t);
+	void DrawTile(FTiles& t);
 
 	
 
