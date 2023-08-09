@@ -6,16 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "TileBase.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class TileType
 {
 	NONE,
-	Architecture,
-	Path,
+	Architecture, 
 	Transition,
-
+	ObsticleSpawn
 };
-
 UCLASS()
 class RHINORUNNER_API ATileBase : public AActor
 {
@@ -24,6 +22,7 @@ class RHINORUNNER_API ATileBase : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ATileBase();
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,13 +35,27 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	UStaticMeshComponent* Mesh; 
 
-	UFUNCTION()
-	bool IsTileOutOfVisualizedArea(bool notVisualized);
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		USceneComponent* SpawnPoint;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PerformRefreshEvent(TSubclassOf<ATileBase> Previous);
+
+
+	UPROPERTY(BlueprintReadWrite)
+	TileType Current; 
+
+	UPROPERTY(BlueprintReadWrite)
+		bool CanSpawn;
+
+	UPROPERTY(BlueprintReadWrite)
+		int Column;
+
+	UPROPERTY(BlueprintReadWrite)
+		int Row; 
 	
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FVector NearBounds = FVector::ZeroVector;
+
 
 	 
 

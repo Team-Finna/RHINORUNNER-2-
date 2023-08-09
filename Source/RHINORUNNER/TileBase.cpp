@@ -11,13 +11,20 @@ ATileBase::ATileBase()
 	
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(GetRootComponent());
+
+	SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Transform location to spawn to"));
+	SpawnPoint->SetupAttachment(Mesh, NAME_None);
+
 }
 
 // Called when the game starts or when spawned
 void ATileBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (Column == 0 || Column == 1 || Column == 7 || Column == 8)
+	{
+		Current = TileType::Architecture;
+	}
 }
 
 // Called every frame
@@ -29,16 +36,15 @@ void ATileBase::Tick(float DeltaTime)
 	//MoveToStartLocation();
 }
 
-bool ATileBase::IsTileOutOfVisualizedArea(bool notVisualized)
+void ATileBase::PerformRefreshEvent_Implementation(TSubclassOf<ATileBase> Previous)
 {
-	
-	if (notVisualized)
+	if (Column == 0 || Column == 1 || Column == 8 || Column == 7)
 	{
-		SetActorHiddenInGame(true);
+		Current = TileType::Architecture;
 	}
 
-	return notVisualized;
-	
 }
+
+
 
 
