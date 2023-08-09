@@ -35,9 +35,9 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	UStaticMeshComponent* Mesh; 
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		USceneComponent* SpawnPoint;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSubclassOf<AActor> ActorToSpawn; 
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void PerformRefreshEvent(TSubclassOf<ATileBase> Previous);
 

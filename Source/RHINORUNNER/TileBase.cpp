@@ -12,9 +12,8 @@ ATileBase::ATileBase()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(GetRootComponent());
 
-	SpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Transform location to spawn to"));
-	SpawnPoint->SetupAttachment(Mesh, NAME_None);
-
+	ActorToSpawn = AActor::StaticClass(); 
+	
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +23,8 @@ void ATileBase::BeginPlay()
 	if (Column == 0 || Column == 1 || Column == 7 || Column == 8)
 	{
 		Current = TileType::Architecture;
+		
+		
 	}
 }
 
@@ -40,9 +41,9 @@ void ATileBase::PerformRefreshEvent_Implementation(TSubclassOf<ATileBase> Previo
 {
 	if (Column == 0 || Column == 1 || Column == 8 || Column == 7)
 	{
-		Current = TileType::Architecture;
+		CanSpawn = true; 
 	}
-
+	
 }
 
 
