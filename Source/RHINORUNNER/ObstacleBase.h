@@ -15,7 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	AObstacleBase();
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere)
