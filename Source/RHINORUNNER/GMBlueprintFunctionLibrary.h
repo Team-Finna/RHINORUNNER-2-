@@ -14,7 +14,10 @@ class RHINORUNNER_API UGMBlueprintFunctionLibrary : public UBlueprintFunctionLib
 {
 	GENERATED_BODY()
 
-	
+public:
+
+		UFUNCTION(BlueprintPure)
+		static FVector RandomLocation(FVector InputVector, float Variation);
 
 		
 	
